@@ -1,68 +1,47 @@
-beforeEach(() => {
-    const products = [
-        {
-          id: 1,
-          name: 'foo',
-          price: 7
-        },
-        {
-          id: 2,
-          name: 'bar',
-          price: 2
-        },
-        {
-          id: 5,
-          name: 'bazz',
-          price: 1
-        },
-      ];
-      
-      const users = [
-        {
-           id: 1,
-           name: 'moe'
-        },
-        {
-           id: 2,
-           name: 'larry'
-        },
-        {
-           id: 3,
-           name: 'curly'
-        }
-      ];
-      
-      // productId matches up with product in products
-      // userId matches up with user in users
-      const orders = [
-        {
-          id: 1,
-          productId: 1,
-          quantity: 3,
-          userId: 1
-        },
-        {
-          id: 2,
-          productId: 1,
-          quantity: 7,
-          userId: 1
-        },
-        {
-          id: 3,
-          productId: 5,
-          quantity: 70,
-          userId: 3
-        },
-        {
-          id: 3,
-          productId: 5,
-          quantity: 1,
-          userId: 3
-        }
-      ];
-})
 describe('products purchased', function(){
-   it('is a function', function (){
-       expect( typeof productsPurchased ).toEqual('function');
-   })
-})
+    it('is a function', function(){
+        expect(typeof productsPurchased).toEqual('function');
+    });
+    it('returns an array of objects purchased', function(){
+        expect( productsPurchased(orders, products) ).toEqual( [ {
+            id: 1,
+            name: 'foo',
+            price: 7
+          }, 
+          {
+            id: 5,
+            name: 'bazz',
+            price: 1
+          }] );
+    });
+});
+
+describe('top selling product by quantity', function(){
+    it('is a function', function(){
+        expect(typeof topSellingProductByQuantity).toEqual('function');
+    });
+    it('returns the top selling product object', function(){
+        expect( topSellingProductByQuantity(orders, products) ).toEqual(  {
+            id: 5,
+            name: 'bazz',
+            price: 1,
+            quantity: 71,
+          } );
+    });
+});
+
+describe('users with orders', function(){
+    it('is a function', function(){
+        expect(typeof usersWithOrders).toEqual('function');
+    });
+    it('returns only users who have placed an order', function(){
+        expect( usersWithOrders(users, orders)).toEqual([ {
+            id: 1,
+            name: 'moe'
+         },  
+         {
+            id: 3,
+            name: 'curly'
+         }]);
+    });
+});
